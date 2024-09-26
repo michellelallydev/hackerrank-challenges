@@ -1,5 +1,6 @@
 //arr = [5, 3, 1, 2, 4]
-arr = [0,1,2,3,4,5,6]
+arr = [0,1,2,3,4,5,6];
+
 function findMedian(arr) {
     arr.sort(function(a, b) {
         return a - b;
