@@ -1,0 +1,6 @@
+findMinumumMoves: https://www.youtube.com/watch?v=Shv-8F9cIJI&list=PLIUso1jSUd-Y9E2mxrhz5dqaldmZCtVxT&index=3
+arrayChallenge: https://www.youtube.com/watch?v=r3ayM0RCeZA&list=PLIUso1jSUd-Y9E2mxrhz5dqaldmZCtVxT&index=2
+costOfStock: https://www.youtube.com/watch?v=UT8MiNJb96s&list=PLIUso1jSUd-Y9E2mxrhz5dqaldmZCtVxT&index=4
+fizzBuzz: https://www.youtube.com/watch?v=QCjVM3ZAcsM&list=PLIUso1jSUd-Y9E2mxrhz5dqaldmZCtVxT&index=5
+oddEvenTransform: https://www.youtube.com/watch?v=Q-iAGdf03fE&list=PLIUso1jSUd-Y9E2mxrhz5dqaldmZCtVxT&index=7
+triangleType: https://www.youtube.com/watch?v=gjTzUQrV_XA&list=PLIUso1jSUd-Y9E2mxrhz5dqaldmZCtVxT&index=8

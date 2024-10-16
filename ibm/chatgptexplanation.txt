@@ -1,0 +1,127 @@
+This question seems to deal with exclusive execution times of functions in a preemptive single-threaded CPU based on the task's execution log.
+
+In simpler terms:
+
+    You have n functions.
+    Each function can be preempted by other functions, and you need to calculate how much exclusive time each function gets.
+    The execution log (logs) will tell when a function starts and ends. These logs help track when each function starts or is preempted.
+
+Key Points:
+
+    Exclusive time: The time when the function is actively running, not when it's preempted by another higher-priority task.
+    Logs will be in the form:
+        "function_id:start:timestamp"
+        "function_id:end:timestamp"
+
+Solution Strategy:
+
+    Parse the log entries.
+    Use a stack to keep track of currently running functions.
+    Track each function's exclusive time.
+    Whenever a function is preempted or resumed, adjust the times accordingly.
+
+Here’s a C++ solution that follows this approach:
+C++ Code:
+
+cpp
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <stack>
+#include <sstream>
+
+using namespace std;
+
+vector<int> exclusiveTime(int n, vector<string>& logs) {
+    vector<int> result(n, 0);  // To store the exclusive time for each function
+    stack<int> functionStack;  // Stack to store active function IDs
+    int prevTime = 0;          // To track the previous timestamp
+    
+    for (const string& log : logs) {
+        // Split the log into parts (function_id, start/end, timestamp)
+        stringstream ss(log);
+        string idStr, type, timeStr;
+        getline(ss, idStr, ':');
+        getline(ss, type, ':');
+        getline(ss, timeStr, ':');
+        
+        int id = stoi(idStr);  // Function ID
+        int timestamp = stoi(timeStr);  // Time
+        
+        if (!functionStack.empty()) {
+            // Add time spent by the top function in the stack
+            result[functionStack.top()] += (timestamp - prevTime);
+        }
+        
+        prevTime = timestamp;  // Update previous time
+        
+        if (type == "start") {
+            // Function starts, push onto stack
+            functionStack.push(id);
+        } else {
+            // Function ends, pop from stack and account for its time
+            result[functionStack.top()] += 1;  // Include the current second
+            functionStack.pop();
+            prevTime++;  // Move time ahead after the end
+        }
+    }
+    
+    return result;
+}
+
+int main() {
+    // Example usage:
+    int n = 2;  // Number of functions
+    vector<string> logs = {
+        "0:start:0",
+        "1:start:2",
+        "1:end:5",
+        "0:end:6"
+    };
+
+    vector<int> result = exclusiveTime(n, logs);
+    
+    for (int time : result) {
+        cout << time << " ";
+    }
+    cout << endl;
+    
+    return 0;
+}
+
+Explanation:
+
+    Logs parsing: The log entries are split into three parts: function ID, type (start/end), and timestamp.
+    Stack-based approach: We use a stack to track the currently running function. When a new function starts, the previous one is paused, and we push the new function onto the stack. When a function ends, it pops from the stack.
+    Exclusive time calculation:
+        For each function start, we update the time for the previous function (if any) and start tracking the new function.
+        For each function end, we update the function's time and pop it off the stack.
+    Adjusting time: After a function ends, we move the time forward by one (prevTime++) because the end event includes that time.
+
+Example:
+
+For the input logs:
+
+makefile
+
+0:start:0
+1:start:2
+1:end:5
+0:end:6
+
+The result will be:
+
+csharp
+
+[3, 4]
+
+    Function 0 runs from 0-1, pauses, and resumes from 6-6 (total 3 units of time).
+    Function 1 runs exclusively from 2-5 (total 4 units of time).
+
+Edge Cases:
+
+    Only one function (no preemption).
+    Overlapping starts and ends.
+
+This should solve your problem in C++. Let me know if you'd like further clarifications!
